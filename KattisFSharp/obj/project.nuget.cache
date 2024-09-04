@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Ly+zADvUb8vyTBDSNcQ1a9Vyz7jdfO/rBxcIWFtRGPShMxtTgXzucN6CQvWzLa4y+RLpHyRrs70bm51EPq/HzA==",
+  "dgSpecHash": "pUiWJc98lp2txVuLB5Odjvy19huy65tPTn2/qrSECbRyGnngTYEuC+ZezIsSCmIB+HeFYa/v9naUd94naMUXuQ==",
   "success": true,
-  "projectFilePath": "/Users/thekure23/Local_Code/AlgoDesign/KattisFSharp/KattisFSharp.fsproj",
+  "projectFilePath": "/Users/thekure23/Local_Code/AlgoDesign/AlgoDes2024/KattisFSharp/KattisFSharp.fsproj",
   "expectedPackageFiles": [
     "/Users/thekure23/.nuget/packages/fsharp.core/7.0.0/fsharp.core.7.0.0.nupkg.sha512"
   ],

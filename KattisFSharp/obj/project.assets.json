@@ -113,11 +113,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/thekure23/Local_Code/AlgoDesign/KattisFSharp/KattisFSharp.fsproj",
+      "projectUniqueName": "/Users/thekure23/Local_Code/AlgoDesign/AlgoDes2024/KattisFSharp/KattisFSharp.fsproj",
       "projectName": "KattisFSharp",
-      "projectPath": "/Users/thekure23/Local_Code/AlgoDesign/KattisFSharp/KattisFSharp.fsproj",
+      "projectPath": "/Users/thekure23/Local_Code/AlgoDesign/AlgoDes2024/KattisFSharp/KattisFSharp.fsproj",
       "packagesPath": "/Users/thekure23/.nuget/packages/",
-      "outputPath": "/Users/thekure23/Local_Code/AlgoDesign/KattisFSharp/obj/",
+      "outputPath": "/Users/thekure23/Local_Code/AlgoDesign/AlgoDes2024/KattisFSharp/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/thekure23/.nuget/NuGet/NuGet.Config"

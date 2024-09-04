@@ -12,6 +12,8 @@
         <Compile Include="zzbeeneverywhere.fs" />
         <Compile Include="tester.fs" />
         <Compile Include="nnBasicProgramming.fs" />
+        <Compile Include="nn_interval_scheduling.fs" />
+        <Compile Include="nn_minimum_scalar_product.fs" />
         <Compile Include="nnStablePerfectMatch.fs" />
         <Content Include="input.txt" />
         <Compile Include="zzProgram.fs" />

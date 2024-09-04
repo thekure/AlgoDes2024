@@ -1,12 +1,9 @@
 module KattisFSharp.Program
 
-open KattisFSharp.aaKattio
-open KattisFSharp.nnBasicProgramming
-open KattisFSharp.nnStablePerfectMatch
-open KattisFSharp.tester
+open KattisFSharp.nn_minimum_scalar_product
 
 [<EntryPoint>]
 let main argv =
-    runStablePerfectMatch
+    runMinimum
 
     0
