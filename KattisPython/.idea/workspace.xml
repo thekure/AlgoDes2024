@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8fee3c0-d0b5-4c77-8d31-9271ad5648b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/GeneratePoints.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/input2.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../KattisFSharp/obj/Debug/net7.0/KattisFSharp.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../KattisFSharp/obj/Debug/net7.0/KattisFSharp.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../KattisFSharp/obj/Debug/net7.0/KattisFSharp.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../KattisFSharp/obj/Debug/net7.0/KattisFSharp.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../KattisFSharp/obj/Debug/net7.0/KattisFSharp.fsproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../KattisFSharp/obj/Debug/net7.0/KattisFSharp.fsproj.AssemblyReference.cache" afterDir="false" />
@@ -17,13 +15,8 @@
       <change beforePath="$PROJECT_DIR$/../KattisFSharp/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../KattisFSharp/obj/project.packagespec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../KattisFSharp/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/../KattisFSharp/obj/rider.project.model.nuget.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../KattisFSharp/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../KattisFSharp/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/KattisPython.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/KattisPython.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClosestPairs.py" beforeDir="false" afterPath="$PROJECT_DIR$/ClosestPairs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/StablePerfectMatch.py" beforeDir="false" afterPath="$PROJECT_DIR$/StablePerfectMatch.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/input.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,20 +45,20 @@
     <option name="showLibraryContents" value="true" />
     <option name="sortKey" value="BY_TIME_ASCENDING" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/thekure/Local_Code/AlgoDes2024/KattisPython&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;AndroidSettingsPageId&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/thekure/Local_Code/AlgoDes2024/KattisPython",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="ClosestPairs" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="KattisPython" />
@@ -113,7 +106,7 @@
       <option name="presentableId" value="Default" />
       <updated>1726400895706</updated>
       <workItem from="1726400896863" duration="2252000" />
-      <workItem from="1726404426752" duration="4294000" />
+      <workItem from="1726404426752" duration="5036000" />
     </task>
     <servers />
   </component>
