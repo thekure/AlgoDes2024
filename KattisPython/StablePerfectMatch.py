@@ -112,7 +112,7 @@ def are_disjoint(a, b):
 def contains_none(a, b):
     return None in a or None in b
 
-def main():
+def run():
     read_input()
     split_names()
     # print_data()
@@ -128,7 +128,3 @@ def main():
         for (proposer, rejector) in final_matches:
             print(f"{proposer} {rejector}")
     else: print("-")
-
-
-if __name__ == "__main__":
-    main()
