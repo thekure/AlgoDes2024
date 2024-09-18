@@ -24,7 +24,7 @@ public class WeightCombinator
         var lines = input.Split(new[] { '\n' }, RemoveEmptyEntries);
 
         n = int.Parse(lines[0]);
-        
+        InitializeGlobals();
 
         for (var i = 1; i < n+1; i++) {
             _weights[i-1] = (int.Parse(lines[i]));
@@ -61,10 +61,30 @@ public class WeightCombinator
     {
         if (_weights.Length == index) return 0;
         if (_weights.Length == 1) return _weights[0];
+
+        int drop;
+        int take;
+        if (_results[index] == -1)
+        {
+            drop = Solve(index + 1);
+            _results[index] = drop;
+        }
+        else
+        {
+            drop = _results[index];
+        }
+
+        if (_results[index] == -1)
+        {
+            take = Solve(index + 1);
+            _results[index] = take;
+            take = _weights[index] + take;
+        }
+        else
+        {
+            take = _weights[index] + _results[index];
+        }
         
-        var drop = Solve(index + 1);
-        var take = _weights[index] + Solve(index + 1);
-        if(index == 0) WriteLine($"take w i = 0: {take}, drop: {drop}");
         return GetDist(drop) < GetDist(take) ? drop : take;
     }
     
@@ -102,8 +122,7 @@ public class WeightCombinator
     public void Run()
     {
         ParseInput();
-        InitializeGlobals();
-        PrintWeights();
+        // PrintWeights();
         if      (_weights.Length == 1)    WriteLine(_weights[0]);
         else if (_weights.Contains(1000)) WriteLine(1000);
         else
