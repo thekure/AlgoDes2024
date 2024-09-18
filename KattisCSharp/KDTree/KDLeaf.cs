@@ -1,6 +1,5 @@
-namespace KattisCSharp;
+namespace KattisCSharp.KDTree;
 
-using System.Collections.Generic;
 public class KDLeaf : KDNode
 {
     private readonly List<Point> _points;

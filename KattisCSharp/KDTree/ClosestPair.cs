@@ -1,11 +1,10 @@
 using static System.Globalization.CultureInfo;
 using static System.Globalization.NumberStyles;
 
-namespace KattisCSharp;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
+namespace KattisCSharp.KDTree;
+#pragma warning disable CS8618
+#pragma warning disable CS8602
+#pragma warning disable CS8604
 
 public class ClosestPair
 {
@@ -139,7 +138,7 @@ public class ClosestPair
         return (closestP1, closestP2, minDist);
     }
 
-    public static void Main()
+    public static void RunProgram()
     {
         // Input reading
         int n = int.Parse(Console.ReadLine());

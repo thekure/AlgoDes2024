@@ -1,9 +1,6 @@
 using static System.Math;
 
-namespace KattisCSharp;
-
-using System.Collections.Generic;
-using System.Linq;
+namespace KattisCSharp.KDTree;
 
 public class BoundingBox
 {

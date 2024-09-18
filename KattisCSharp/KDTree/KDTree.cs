@@ -1,6 +1,5 @@
-namespace KattisCSharp;
+namespace KattisCSharp.KDTree;
 
-using System.Collections.Generic;
 public class KDTree
 {
     private readonly KDNode _root;

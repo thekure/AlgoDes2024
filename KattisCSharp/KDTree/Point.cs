@@ -1,7 +1,7 @@
 using System.Globalization;
 using static System.Math;
 
-namespace KattisCSharp;
+namespace KattisCSharp.KDTree;
 
 public class Point
 {

@@ -1,11 +1,8 @@
 using System.Globalization;
 using static System.Console;
 using static System.StringSplitOptions;
-using System.IO;
 
-namespace KattisCSharp;
-
-using System.Collections.Generic;
+namespace KattisCSharp.KDTree;
 
 public static class InputHandler
 {
