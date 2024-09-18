@@ -88,37 +88,6 @@ public class WeightCombinator
         return GetDist(drop) < GetDist(take) ? drop : take;
     }
     
-    /*private int Solve(int distance = 1000, int combo = 0, int index = 0)
-    {
-        if (_weights.Length == index) {
-            WriteLine("No more weights."); // base case
-            WriteLine();
-            return 0; 
-        }
-        WriteLine($"Distance: {distance}, Combo: {combo}, Index: {index}, Current element: {_weights[index]}");
-
-        
-        // Drop case
-        if (NewDist(combo, index) > distance)
-        {
-            WriteLine($"Drop Case accepted - NewDist: {NewDist(combo, index)}\n");
-            return Solve(distance, combo, index + 1);
-        }
-        
-        // Take case
-        var newDist = NewDist(combo, index);
-        var newCombo = combo + _weights[index];
-        WriteLine($"newDist: {newDist}, newCombo: {newCombo}");
-
-        WriteLine("End");
-        WriteLine();
-        return Math.Max(
-            Solve(newDist, newCombo, index + 1),
-            _weights[index] + Solve(newDist, newCombo, index + 1)
-        );
-        
-    }*/
-
     public void Run()
     {
         ParseInput();
