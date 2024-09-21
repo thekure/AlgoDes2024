@@ -80,77 +80,19 @@ public class WeightCombinator
             Write(" ");
         }
     }
-    
-    private int Solve(int i, int cap)
-    {
-        var w = _weights[i];
-        Indent(i);
-        WriteLine($"Index: {i}, Cap: {cap}, Weight: {w}");
-        if (i == 0) return 0;
-        if (_weights.Length == 1) return _weights[0];
-        int drop;
-        int take;
-        
-        if (_m[i, w] == -1) {
-            drop = Solve(i - 1, cap);
-            _m[i, _weights[i-1]] = drop;
-            Indent(i);
-            WriteLine($"Assigned m[{i}, {_weights[i-1]}] to {drop} (drop)");
-        } else {
-            drop = _m[i, w];
-        }
-        
-        if (_m[i, w] == -1)
-        {
-            take = _weights[i-1] + Solve(i - 1, cap - w);
-            if (take <= cap)
-            {
-                _m[i, _weights[i - 1]] = take;
-                Indent(i);
-                WriteLine($"1st: Assigned m[{i}, {_weights[i-1]}] to {take} (take)");
-            }
-        }
-        else
-        {
-            take = w + _m[i, w];
-            if (take <= cap)
-            {
-                _m[i, _weights[i - 1]] = take;
-                Indent(i);
-                WriteLine($"2nd: Assigned m[{i}, {_weights[i-1]}] to {take} (take)");
-            }
-        }
-        
-        Indent(i);
-        WriteLine($"Drop: {drop}, take: {take}");
-        Indent(i);
-        WriteLine($"GetDist(Drop): {GetDist(drop)}, GetDist(Take): {GetDist(take)}");
-        if (GetDist(drop) < GetDist(take))
-        {
-            _m[i, _weights[i-1]] = drop;
-            Indent(i);
-            WriteLine($"Take: {take}, cap: {cap}");
-        }
-        else if(take <= cap) {_m[i, _weights[i-1]] = take;}
-        else _m[i, _weights[i-1]] = drop;
-        Indent(i);
-        WriteLine($"Assigned m[{i}, {_weights[i-1]}] to {_m[i, _weights[i-1]]} (final)");
-        return _m[i, _weights[i-1]];
-    }
-
-    private int Solve2(int cap, int[] weights, int m)
+    private int Solve(int cap, int m)
     {
         if(m == 0 || cap == 0) return 0;        // Base case
         if(_m[m, cap] != -1) return _m[m, cap]; // Check memory for previously calculated result
-
-        if (weights[m - 1] > cap)
+        
+        if (_weights[m - 1] > cap)
         {
-            return _m[m, cap] = Solve2(cap, weights, m - 1);
+            return _m[m, cap] = Solve(cap,  m - 1);
         }
 
         return _m[m, cap] = 
-            Math.Max(weights[m - 1] + Solve2(cap - weights[m - 1], weights, m - 1),
-                Solve2(cap, weights, m - 1));
+            Math.Max(_weights[m - 1] + Solve(cap - _weights[m - 1], m - 1),
+                Solve(cap, m - 1));
     }
     
     public void Run()
@@ -160,7 +102,7 @@ public class WeightCombinator
         else if (_weights.Contains(_weightLimit)) WriteLine(_weightLimit);
         else
         {
-            var result = Solve2(_weightLimit, _weights, n);
+            var result = Solve(_weightLimit, n);
             PrintM();
             WriteLine();
             WriteLine($"Solution: {result}");
