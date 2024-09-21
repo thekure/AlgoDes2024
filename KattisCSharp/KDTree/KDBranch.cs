@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace KattisCSharp.KDTree;
 
 public class KDBranch : KDNode
