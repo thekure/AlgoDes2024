@@ -15,9 +15,10 @@ using static System.StringSplitOptions;
 public class WeightCombinator
 {
     private int n;
-    private const int _weightLimit = 50;
+    private const int target = 50;
     private int[] _weights;
     private int[,] _m;
+    private int total;
 
     private void ParseInput()
     {
@@ -29,38 +30,31 @@ public class WeightCombinator
         InitializeGlobals();
 
         for (var i = 1; i < n+1; i++) {
-            _weights[i-1] = (int.Parse(lines[i]));
+            _weights[i-1] = int.Parse(lines[i]);
         }
         
         Array.Sort(_weights);
-        // Array.Sort(_weights, (a, b) => b.CompareTo(a));
     }
     
     private void InitializeGlobals()
     {
         _weights = new int[n];
-        _m = new int[n+1, _weightLimit+1];
+        _m = new int[n+1, target*2+1];
         for (var i = 0; i < n+1; i++)
         {
-            for (var j = 0; j < _weightLimit+1; j++)
+            for (var j = 0; j < target*2+1; j++)
             {
                 _m[i, j] = -1;
             }
         }
     }
-
-    private void PrintWeights()
-    {
-        foreach (var w in _weights) {
-            WriteLine(w);
-        }
-    }
+    
     private void PrintM()
     {
-        for (var i = 0; i < n; i++)
+        for (var i = 0; i < n+1; i++)
         {
             Write($"{i}: ");
-            for (var j = 0; j < _weightLimit; j++)
+            for (var j = 0; j < target*2+1; j++)
             {
                 Write(_m[i, j] == -1 ? "_ " : $"{_m[i, j]} ");
             }
@@ -70,7 +64,7 @@ public class WeightCombinator
     
     private static int GetDist(int val)
     {
-        return int.Abs(_weightLimit - val);
+        return int.Abs(target - val);
     }
 
     private void Indent(int i)
@@ -90,19 +84,24 @@ public class WeightCombinator
             return _m[m, cap] = Solve(cap,  m - 1);
         }
 
+        var drop = Solve(cap, m - 1);
+        var take = _weights[m - 1] + Solve(cap - _weights[m - 1], m - 1);
+        Indent(m);
+        Write($"{m}: ");
+        Indent(m);
+        WriteLine($"drop: {drop}, take: {take}");
         return _m[m, cap] = 
-            Math.Max(_weights[m - 1] + Solve(cap - _weights[m - 1], m - 1),
-                Solve(cap, m - 1));
+            Math.Max(take, drop);
     }
     
     public void Run()
     {
         ParseInput();
         if      (_weights.Length == 1)    WriteLine(_weights[0]);
-        else if (_weights.Contains(_weightLimit)) WriteLine(_weightLimit);
+        else if (_weights.Contains(target)) WriteLine(target);
         else
         {
-            var result = Solve(_weightLimit, n);
+            var result = Solve(target, n);
             PrintM();
             WriteLine();
             WriteLine($"Solution: {result}");
