@@ -1,6 +1,5 @@
 ﻿
-using KattisCSharp.Walrus;
+using KattisCSharp.Knapsack;
 
-
-var program = new WeightCombinator();
+var program = new Knapsack();
 program.Run();

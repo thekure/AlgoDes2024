@@ -1,8 +1,3 @@
-using System;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-
 namespace KattisCSharp.Walrus;
 
 #pragma warning disable CS8618
@@ -15,10 +10,9 @@ using static System.StringSplitOptions;
 public class WeightCombinator
 {
     private int n;
-    private const int target = 50;
+    private const int target = 1000;
     private int[] _weights;
     private int[,] _m;
-    private int total;
 
     private void ParseInput()
     {
@@ -56,7 +50,7 @@ public class WeightCombinator
             Write($"{i}: ");
             for (var j = 0; j < target*2+1; j++)
             {
-                Write(_m[i, j] == -1 ? "_ " : $"{_m[i, j]} ");
+                Write(_m[i, j] == -1 ? "." : $"{_m[i, j]} ");
             }
             WriteLine();
         }
@@ -66,32 +60,26 @@ public class WeightCombinator
     {
         return int.Abs(target - val);
     }
-
-    private void Indent(int i)
+    
+    private static int ChooseBest(int drop, int take)
     {
-        for (var j = 0; j < (-i) + n; j++)
-        {
-            Write(" ");
-        }
+        var dropDist = GetDist(drop);
+        var takeDist = GetDist(take);
+
+        return takeDist <= dropDist ? take : drop;
     }
-    private int Solve(int cap, int m)
+    
+    private int Solve(int curDist, int m)
     {
-        if(m == 0 || cap == 0) return 0;        // Base case
-        if(_m[m, cap] != -1) return _m[m, cap]; // Check memory for previously calculated result
+        if(m == 0 || curDist <= 0) return target - curDist;
+        if(_m[m, curDist] != -1) return _m[m, curDist];      // Check memory for previously calculated result
         
-        if (_weights[m - 1] > cap)
-        {
-            return _m[m, cap] = Solve(cap,  m - 1);
-        }
+        var drop = Solve(curDist, m - 1);
+        var take = Solve(curDist - _weights[m-1], m - 1);
+        
+        var optimal = ChooseBest(drop, take);
 
-        var drop = Solve(cap, m - 1);
-        var take = _weights[m - 1] + Solve(cap - _weights[m - 1], m - 1);
-        Indent(m);
-        Write($"{m}: ");
-        Indent(m);
-        WriteLine($"drop: {drop}, take: {take}");
-        return _m[m, cap] = 
-            Math.Max(take, drop);
+        return _m[m, curDist] = optimal;
     }
     
     public void Run()
@@ -102,10 +90,7 @@ public class WeightCombinator
         else
         {
             var result = Solve(target, n);
-            PrintM();
-            WriteLine();
-            WriteLine($"Solution: {result}");
-            WriteLine();
+            WriteLine(result);
         }
     }
 }
