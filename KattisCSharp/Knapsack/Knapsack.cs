@@ -1,6 +1,9 @@
 namespace KattisCSharp.Knapsack;
 
-using static Console;
+using static System.Console;
+using System.Collections.Generic;
+using System.IO;
+using System;
 
 #pragma warning disable CS8602
 
@@ -52,6 +55,28 @@ public class Knapsack
         
         return m[i, cap] = Math.Max(take, drop);
     }
+    
+    private static List<int> FindSelectedItems(int cap, int[] values, int[] weights, int[,] m)
+    {
+        var i = values.Length;  // Start from the last item
+        var selectedItems = new List<int>();
+
+        // If i is 0, there are no more items.
+        // If cap is 0, we have found all the items in the sack.
+        while (0 < i && 0 < cap)
+        {
+            // In the dp table, if the value of a cell differs from the one directly above it, the item in question was
+            // taken. Otherwise the values would be equal.
+            if (m[i, cap] != m[i - 1, cap]) 
+            {
+                selectedItems.Add(i);  // Save index
+                cap -= weights[i - 1]; // Reduce capacity by the weight of the selected item
+            }
+            i--;  // Move to the previous item
+        }
+
+        return selectedItems;
+    }
 
     private static void SolveTestCase(TestCase t)
     {
@@ -66,7 +91,22 @@ public class Knapsack
             }
         }
         
-        WriteLine(Solve(t.cap, t.values, t.weights, _m, t.num_objects));
+        // Find the highest possible value, but disregard the result
+        Solve(t.cap, t.values, t.weights, _m, t.num_objects);
+        
+        // Find the actual objects that was part of the solution, by iterating over the dp table (memory)
+        var indices = FindSelectedItems(t.cap, t.values, t.weights, _m);
+        indices.Reverse();
+        
+        // Print the amount of selected objects
+        WriteLine(indices.Count);
+        foreach (var i in indices)
+        {
+            // Print the individual objects index separated by space
+            Write($"{i-1} ");
+        }
+        // Newline after the last index
+        WriteLine();
     }
     
     public static void Run()
