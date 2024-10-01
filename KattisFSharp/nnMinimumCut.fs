@@ -41,39 +41,69 @@ let s = scanner.NextInt()
 let t = scanner.NextInt()
 
 let readInput =
-    let rec aux i (lst, map) =
+    let rec aux i (edges, adj, forward, backward) =
         match i with
         | i when i = m ->
-            let newLst = List.rev lst
-            newLst, map
+            let newLst = List.rev edges
+            newLst, adj, forward, backward
         | i ->
             let u = scanner.NextInt()
             let v = scanner.NextInt()
             let w = scanner.NextInt()
             
-            let newLst = (u, v, w) :: lst           // Add tuple to edge list
-            let adjLst =                            // Find adjacency list for vertex u
-                match Map.tryFind u map with
+            // Update edges list
+            let newEdges = (u, v, w) :: edges
+            
+            // Update adjacency map (might become obsolete)
+            let adjLst =                         // Find adjacency list for vertex u
+                match Map.tryFind u adj with
                 | Some list -> list
                 | None -> List.empty
-            let newAdjLst = (v, u) :: adjLst             // Add v to u's adj list    
-            let newMap = Map.add u newAdjLst map    // Update adjacency map
-            aux (i+1) (newLst, newMap)              // Continue reading
-    aux 0 (List.empty, Map.empty)
+            let newAdjLst = v :: adjLst          // Add v to u's adj list    
+            let newAdj = Map.add u newAdjLst adj // Update adjacency map
+            
+            // Update forward residual map
+            let forwardLst =                                      // Find forward list for vertex u 
+                match Map.tryFind u forward with
+                | Some list -> list
+                | None -> List.empty
+            let newForwardLst = (v, w) :: forwardLst              // Add v to u's forward list
+            let newForward = Map.add u newForwardLst forward      // Update forward map
+            
+            // Update backward residual map
+            let backwardLst =                                     // Find backward list for vertex v
+                match Map.tryFind v backward with
+                | Some list -> list
+                | None -> List.empty
+            let newBackwardLst = (u, 0) :: backwardLst            // Add u to v's backward list with w 0
+            let newBackward = Map.add v newBackwardLst backward   // Update backward map
+            
+            aux (i+1) (newEdges, newAdj, newForward, newBackward) // Continue reading
+    aux 0 (List.empty, Map.empty, Map.empty, Map.empty)
 
-let rec printInput input =
+let rec printEdges input =
     match input with
     | (u, v, w) :: tail ->
         printf($"{u} {v} {w}\n")
-        printInput tail
+        printEdges tail
     | _ -> printf($"\n")
 
 let rec printAdjList lst =
     printf($"[ ")
     let rec aux lst =
         match lst with
-        | (v, w) :: tail ->
-            printf($"({v}, {w}) ")
+        | v :: tail ->
+            printf($"{v} ")
+            aux tail
+        | _ -> printf($"]\n")
+    aux lst
+
+let rec printResList lst =
+    printf($"[ ")
+    let rec aux lst =
+        match lst with
+        | (vertex, weight) :: tail ->
+            printf($"({vertex}, {weight}) ")
             aux tail
         | _ -> printf($"]\n")
     aux lst
@@ -81,9 +111,11 @@ let rec printAdjList lst =
 let loop =
     // 
     // printf($"n: {n}, m: {m}, s: {s}, t: {t}\n")
-    let edges, adj = readInput
-    // printInput list
+    let edges, adj, forward, backward = readInput
+    // printEdges edges
     // printAdjList (Map.find 1 adj)
+    // printResList (Map.find 1 forward)
+    // printResList (Map.find 2 backward)
     
     
     ()
