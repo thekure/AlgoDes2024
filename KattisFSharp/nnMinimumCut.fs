@@ -10,6 +10,9 @@ t: sink        0 <= t <= n - 1   &&   s != t
 
 n m s t
 4 5 0 3
+
+There is an edge from u to v with weight w
+u v w
 0 1 10
 1 2 1
 1 3 1
@@ -37,22 +40,31 @@ let m = scanner.NextInt()
 let s = scanner.NextInt()
 let t = scanner.NextInt()
 
-(*let readInput =
+let readInput =
     let rec aux i acc =
         match i with
         | i when i = m -> acc |> List.rev
         | i ->
-            let dimensions = scanner.NextInt()
-            let v1 = readVector dimensions
-            let v2 = readVector dimensions
-            aux (i+1) ((v1,v2)::acc)
-    aux 0 List.empty*)
+            let u = scanner.NextInt()
+            let v = scanner.NextInt()
+            let w = scanner.NextInt()
+            aux (i+1) ((u, v, w) :: acc)
+    aux 0 List.empty
 
+let rec printInput input =
+    match input with
+    | (u, v, w) :: tail ->
+        printf($"{u} {v} {w}\n")
+        printInput tail
+    | _ -> printf($"\n")
 
 
 let loop =
     // 
-    printf($"n: {n}, m: {m}, s: {s}, t: {t}")
+    // printf($"n: {n}, m: {m}, s: {s}, t: {t}\n")
+    let list = readInput
+    // printInput list
+    
     
     ()
 let runMinimumCut = loop
