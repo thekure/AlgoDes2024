@@ -1,5 +1,3 @@
 ﻿
-using KattisCSharp.Knapsack;
-
-var program = new Knapsack();
-Knapsack.Run();
+using KattisCSharp.Change;
+ExactChange.Run();

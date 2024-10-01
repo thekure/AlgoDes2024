@@ -1,9 +1,9 @@
 module KattisFSharp.Program
 
-open KattisFSharp.nn_minimum_scalar_product
+open KattisFSharp.nnMinimumCut
 
 [<EntryPoint>]
 let main argv =
-    runMinimum
+    runMinimumCut
 
     0
