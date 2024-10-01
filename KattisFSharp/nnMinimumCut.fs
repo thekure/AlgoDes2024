@@ -41,15 +41,25 @@ let s = scanner.NextInt()
 let t = scanner.NextInt()
 
 let readInput =
-    let rec aux i acc =
+    let rec aux i (lst, map) =
         match i with
-        | i when i = m -> acc |> List.rev
+        | i when i = m ->
+            let newLst = List.rev lst
+            newLst, map
         | i ->
             let u = scanner.NextInt()
             let v = scanner.NextInt()
             let w = scanner.NextInt()
-            aux (i+1) ((u, v, w) :: acc)
-    aux 0 List.empty
+            
+            let newLst = (u, v, w) :: lst           // Add tuple to edge list
+            let adjLst =                            // Find adjacency list for vertex u
+                match Map.tryFind u map with
+                | Some list -> list
+                | None -> List.empty
+            let newAdjLst = (v, u) :: adjLst             // Add v to u's adj list    
+            let newMap = Map.add u newAdjLst map    // Update adjacency map
+            aux (i+1) (newLst, newMap)              // Continue reading
+    aux 0 (List.empty, Map.empty)
 
 let rec printInput input =
     match input with
@@ -58,12 +68,22 @@ let rec printInput input =
         printInput tail
     | _ -> printf($"\n")
 
+let rec printAdjList lst =
+    printf($"[ ")
+    let rec aux lst =
+        match lst with
+        | (v, w) :: tail ->
+            printf($"({v}, {w}) ")
+            aux tail
+        | _ -> printf($"]\n")
+    aux lst
 
 let loop =
     // 
     // printf($"n: {n}, m: {m}, s: {s}, t: {t}\n")
-    let list = readInput
+    let edges, adj = readInput
     // printInput list
+    // printAdjList (Map.find 1 adj)
     
     
     ()
