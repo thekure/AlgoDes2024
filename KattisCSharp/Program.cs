@@ -1,3 +1,4 @@
 ﻿
-using KattisCSharp.Change;
-ExactChange.Run();
+using KattisCSharp.MaximumFlow;
+var program = new MaxFlow();
+program.Run();
