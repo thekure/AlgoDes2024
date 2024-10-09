@@ -11,7 +11,7 @@ using System;
 #pragma warning disable CS8618
 
 
-public class MaxFlow
+public class MaxFlow_EdKarp
 {
     private int n;
     private int m;
@@ -159,14 +159,8 @@ public class MaxFlow
         //timer.Stop(); // Stop timer for Solve
         //Console.WriteLine($"Solve took: {timer.ElapsedMilliseconds} ms"); // Log time taken
     }
-    
-    public static void Main(string[] args)
-    {
-        var maxFlow = new MaxFlow();
-        maxFlow.Run();
-    }
 
-    private void Run()
+    public void Run()
     {
         Init();
         Solve();
@@ -194,4 +188,10 @@ public class MaxFlow
         }
         writer.Flush();  // Flush the writer to ensure output is written
     }
+    
+    /*public static void Main(string[] args)
+    {
+        var maxFlow = new MaxFlow_EdKarp();
+        maxFlow.Run();
+    }*/
 }

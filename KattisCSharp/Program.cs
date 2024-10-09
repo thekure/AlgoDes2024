@@ -1,4 +1,4 @@
 ﻿
-/*using KattisCSharp.MaximumFlow;
-var program = new MaxFlow();
-program.Run();*/
+using KattisCSharp.MaximumFlow;
+var program = new MaxFlow_Gen();
+program.Run();
