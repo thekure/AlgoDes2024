@@ -1,11 +1,16 @@
+using System.Diagnostics;
+
 namespace KattisCSharp.MaximumFlow;
 using System.Collections.Generic;
+using Kattis.IO;
 using System;
+
+
 
 #pragma warning disable CS8602
 #pragma warning disable CS8618
 
-// My solution is inspired by the this implementation: https://github.com/williamfiset/Algorithms/blob/master/src/main/java/com/williamfiset/algorithms/graphtheory/networkflow/examples/EdmondsKarpExample.java#L81
+
 public class MaxFlow
 {
     private int n;
@@ -14,7 +19,7 @@ public class MaxFlow
     private int t;
 
     private long _maxFlow;
-    
+
     private List<Edge>[] _graph;
     private Edge[] _path;
     private int[] _marked;
@@ -66,38 +71,41 @@ public class MaxFlow
 
     private void Init()
     {
-        var nums = Console.ReadLine().Split();
-        n = int.Parse(nums[0]);  // number of nodes
-        m = int.Parse(nums[1]);  // number of edges
-        s = int.Parse(nums[2]);  // source node
-        t = int.Parse(nums[3]);  // target node
+        // Stopwatch timer = Stopwatch.StartNew(); // Start timer for input reading
+
+        var scanner = new Scanner();
+        n = scanner.NextInt();  // number of nodes
+        m = scanner.NextInt();  // number of edges
+        s = scanner.NextInt();  // source node
+        t = scanner.NextInt();  // target node
+        
         _graph = new List<Edge>[n];
         _marked = new int[n];
         ResetMarked();
-        
+
         for (var i = 0; i < n; i++)
         {
             _graph[i] = new List<Edge>();
         }
+        
         for (var i = 0; i < m; i++)
         {
             // Read the u, v, and c values from input
-            var input = Console.ReadLine().Split();
-            
-            var from = int.Parse(input[0]);
-            var to = int.Parse(input[1]);
-            var cap = long.Parse(input[2]);
+            var from = scanner.NextInt();
+            var to = scanner.NextInt();
+            var cap = scanner.NextLong();
 
             var edge = new Edge(from, to, cap);
             var res = new Edge(to, from, 0);
             edge.Residual = res;
             res.Residual = edge;
-            
+
             // Add the new edge (u, v, c) to the list
             _graph[from].Add(edge);
             _graph[to].Add(res);
         }
-        
+        // timer.Stop(); // Stop timer for input reading
+        // Console.WriteLine($"Input reading took: {timer.ElapsedMilliseconds} ms"); // Log time taken
     }
 
     private long BFS()
@@ -123,18 +131,15 @@ public class MaxFlow
             }
         }
 
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         if (!IsMarked(t))
         {
             return 0;
         }
         var bottleNeck = long.MaxValue;
-        
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+
         for (var edge = _path[t]; edge != null; edge = _path[edge.From])
             bottleNeck = Math.Min(bottleNeck, edge.RemainingCap());
-        
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+
         for (var edge = _path[t]; edge != null; edge = _path[edge.From])
         {
             edge.Augment(bottleNeck);
@@ -142,20 +147,33 @@ public class MaxFlow
         
         return bottleNeck;
     }
-    
+
     private void Solve() {
+        //Stopwatch timer = Stopwatch.StartNew(); // Start timer for Solve
         long flow;
         do {
             ResetMarked();
             flow = BFS();
             _maxFlow += flow;
         } while (flow != 0);
+        //timer.Stop(); // Stop timer for Solve
+        //Console.WriteLine($"Solve took: {timer.ElapsedMilliseconds} ms"); // Log time taken
     }
-    public void Run()
+    
+    public static void Main(string[] args)
+    {
+        var maxFlow = new MaxFlow();
+        maxFlow.Run();
+    }
+
+    private void Run()
     {
         Init();
         Solve();
-
+        
+        var writer = new BufferedStdoutWriter();
+        
+        //Stopwatch timer = Stopwatch.StartNew(); // Start timer for Solve
         var printer = new List<string>();
         foreach (var lst in _graph)
         {
@@ -164,11 +182,16 @@ public class MaxFlow
                 if(edge.Flow > 0) printer.Add("" + edge.From + " " + edge.To + " " + edge.Flow);
             }
         }
-        
-        Console.WriteLine($"{_path.Length} {_maxFlow} {printer.Count}");
+
+        //timer.Stop(); // Stop timer for Solve
+        //Console.WriteLine($"Finding all prints took: {timer.ElapsedMilliseconds} ms"); // Log time taken
+
+        // Output results using BufferedStdoutWriter
+        writer.WriteLine($"{_path.Length} {_maxFlow} {printer.Count}");
         foreach (var s in printer)
         {
-            Console.WriteLine(s);
+            writer.WriteLine(s);
         }
+        writer.Flush();  // Flush the writer to ensure output is written
     }
 }
