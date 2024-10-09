@@ -1,4 +1,4 @@
 ﻿
 using KattisCSharp.MaximumFlow;
-var program = new MaxFlow_Gen();
+var program = new Gopher();
 program.Run();

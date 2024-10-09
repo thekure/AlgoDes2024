@@ -8,32 +8,34 @@ namespace KattisCSharp.MaximumFlow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Kattis.IO;
 
 #pragma warning disable CS8602
 #pragma warning disable CS8618
 
 public class MaxFlow_Gen
 {
-    static int n, m, s, t;
-    static List<Dictionary<int, Edge>> graph;
+    public int n, m, s, t;
+    public List<Dictionary<int, Edge>> graph;
 
     public class Edge
     {
-        public int From, To, Capacity, Flow;
+        public readonly int From, To;
+        public int Capacity, Flow;
         public Edge ReverseEdge;
 
         public int ResidualCapacity => Capacity - Flow;
 
         public Edge(int from, int to, int capacity)
         {
-            this.From = from;
-            this.To = to;
-            this.Capacity = capacity;
-            this.Flow = 0;
+            From = from;
+            To = to;
+            Capacity = capacity;
+            Flow = 0;
         }
     }
 
-    public void Run()
+    private void Init()
     {
         // Read input
         var firstLine = Console.ReadLine().Split().Select(int.Parse).ToArray();
@@ -41,47 +43,61 @@ public class MaxFlow_Gen
         m = firstLine[1];
         s = firstLine[2];
         t = firstLine[3];
-
-        graph = new List<Dictionary<int, Edge>>(n);
-        for (int i = 0; i < n; i++)
-        {
-            graph.Add(new Dictionary<int, Edge>());
-        }
-
-        for (int i = 0; i < m; i++)
+        
+        BuildGraph();
+        
+        for (var i = 0; i < m; i++)
         {
             var edgeInput = Console.ReadLine().Split().Select(int.Parse).ToArray();
-            int u = edgeInput[0];
-            int v = edgeInput[1];
-            int c = edgeInput[2];
+            var u = edgeInput[0];
+            var v = edgeInput[1];
+            var c = edgeInput[2];
 
             AddEdge(u, v, c);
         }
+    }
 
-        // Compute max flow
-        int maxFlow = 0;
+    private void BuildGraph()
+    {
+        graph = new List<Dictionary<int, Edge>>(n);
+        for (var i = 0; i < n; i++)
+        {
+            graph.Add(new Dictionary<int, Edge>());
+        }
+    }
+
+    public void InitWithParams(int n, int s, int t)
+    {
+        this.n = n;
+        this.s = s;
+        this.t = t;
+        
+        BuildGraph();
+    }
+    
+    public int ComputeMaxFlow()
+    {
+        var maxFlow = 0;
         while (true)
         {
-            Edge[] parent = new Edge[n];
-            Queue<int> queue = new Queue<int>();
+            var parent = new Edge[n];
+            var queue = new Queue<int>();
             queue.Enqueue(s);
-            bool[] visited = new bool[n];
+            var visited = new bool[n];
             visited[s] = true;
 
             while (queue.Count > 0)
             {
-                int u = queue.Dequeue();
+                var u = queue.Dequeue();
                 foreach (var edge in graph[u].Values)
                 {
-                    int v = edge.To;
-                    if (!visited[v] && edge.ResidualCapacity > 0)
-                    {
-                        visited[v] = true;
-                        parent[v] = edge;
-                        queue.Enqueue(v);
-                        if (v == t)
-                            break;
-                    }
+                    var v = edge.To;
+                    if (visited[v] || edge.ResidualCapacity <= 0) continue;
+                    visited[v] = true;
+                    parent[v] = edge;
+                    queue.Enqueue(v);
+                    if (v == t)
+                        break;
                 }
             }
 
@@ -89,11 +105,11 @@ public class MaxFlow_Gen
                 break;
 
             // Find bottleneck capacity
-            int bottleneck = int.MaxValue;
-            int vCurrent = t;
+            var bottleneck = int.MaxValue;
+            var vCurrent = t;
             while (vCurrent != s)
             {
-                Edge e = parent[vCurrent];
+                var e = parent[vCurrent];
                 bottleneck = Math.Min(bottleneck, e.ResidualCapacity);
                 vCurrent = e.From;
             }
@@ -102,7 +118,7 @@ public class MaxFlow_Gen
             vCurrent = t;
             while (vCurrent != s)
             {
-                Edge e = parent[vCurrent];
+                var e = parent[vCurrent];
                 e.Flow += bottleneck;
                 e.ReverseEdge.Flow -= bottleneck;
                 vCurrent = e.From;
@@ -111,28 +127,40 @@ public class MaxFlow_Gen
             maxFlow += bottleneck;
         }
 
+        return maxFlow;
+    }
+
+    private void CollectAndPrintFlow(int maxFlow)
+    {
         // Collect edges with positive flow
-        List<Edge> flowEdges = new List<Edge>();
-        for (int u = 0; u < n; u++)
+        var flowEdges = new List<Edge>();
+        for (var u = 0; u < n; u++)
         {
             foreach (var edge in graph[u].Values)
             {
-                if (edge.Flow > 0 && edge.Capacity > 0)
+                if (edge is { Flow: > 0, Capacity: > 0 })
                 {
                     flowEdges.Add(edge);
                 }
             }
         }
-
+        
         // Output
         Console.WriteLine($"{n} {maxFlow} {flowEdges.Count}");
         foreach (var edge in flowEdges)
         {
             Console.WriteLine($"{edge.From} {edge.To} {edge.Flow}");
         }
+        
+    }
+    public void Run()
+    {
+        Init();
+        var maxFlow = ComputeMaxFlow();
+        CollectAndPrintFlow(maxFlow);
     }
 
-    static void AddEdge(int u, int v, int capacity)
+    public void AddEdge(int u, int v, int capacity)
     {
         Edge edge, reverseEdge;
 

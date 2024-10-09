@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace Kattis.IO
@@ -91,7 +92,7 @@ namespace Kattis.IO
 
         public double NextDouble()
         {
-            return double.Parse(Next());
+            return double.Parse(Next(), CultureInfo.InvariantCulture);
         }
     }
 
