@@ -1,4 +1,4 @@
 ﻿
 using KattisCSharp.MaximumFlow;
-var program = new Gopher();
+var program = new PaintBall();
 program.Run();
