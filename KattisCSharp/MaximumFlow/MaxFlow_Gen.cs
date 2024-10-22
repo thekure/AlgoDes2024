@@ -130,7 +130,7 @@ public class MaxFlow_Gen
         return maxFlow;
     }
 
-    private void CollectAndPrintFlow(int maxFlow)
+    public void CollectAndPrintFlow(int maxFlow)
     {
         // Collect edges with positive flow
         var flowEdges = new List<Edge>();
@@ -187,5 +187,38 @@ public class MaxFlow_Gen
 
         edge.ReverseEdge = reverseEdge;
         reverseEdge.ReverseEdge = edge;
+    }
+
+    private bool EdgeIsRelevant(Edge edge, int start, int end)
+    {
+        return edge is { Flow: > 0, Capacity: > 0 } &&
+               start < edge.From &&
+               edge.To != end &&
+               edge.From != start && 
+               edge.To != start &&
+               edge.From != end;
+    }
+    
+    public int[] CollectForPaintBall(int maxFlow, int start, int end, int numPlayers)
+    {
+        int[] targets = new int[numPlayers];
+        var index = 0;
+        
+        // Collect edges with positive flow
+        var flowEdges = new List<Edge>();
+        for (var u = 0; u < n; u++)
+        {
+            foreach (var edge in graph[u].Values)
+            {
+                if (EdgeIsRelevant(edge, start, end))
+                {
+                    targets[index] = edge.To - numPlayers;
+                    index++;
+                }
+            }
+        }
+
+        return targets;
+
     }
 }
